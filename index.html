@@ -173,7 +173,7 @@
       margin-top: 1rem;
     }
 
-    /* Reveal panel for answers */
+    /* Reveal panel */
     .reveal{
       margin-top: 0.75rem;
       background: rgba(0,0,0,0.28);
@@ -257,10 +257,10 @@
       <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
       <div class="btn-wrap">
-        <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
-        <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
+        <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywną stronę w nowej karcie">Interaktywna strona</a>
         <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony w nowej karcie">Podpowiedź do strony</a>
         <button class="btn" type="button" id="answersToggle" aria-expanded="false" aria-controls="answersPanel">Odpowiedzi do strony</button>
+        <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka historyjka</a>
       </div>
 
       <!-- Ukryty panel z odpowiedziami -->
@@ -367,7 +367,6 @@ Ukryta podstrona(dodatek): K3Y4P</pre>
       const resetBtn = document.getElementById('bgResetBtn');
       const STORAGE_KEY = 'customHeroBg';
 
-      // Przywróć tło z localStorage (jeśli jest)
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -380,7 +379,6 @@ Ukryta podstrona(dodatek): K3Y4P</pre>
         resetBtn.disabled = true;
       }
 
-      // Wybór pliku
       changeBtn.addEventListener('click', () => input.click());
       input.addEventListener('change', () => {
         const file = input.files && input.files[0];
@@ -402,7 +400,6 @@ Ukryta podstrona(dodatek): K3Y4P</pre>
         reader.readAsDataURL(file);
       });
 
-      // Reset tła
       resetBtn.addEventListener('click', () => {
         hero.style.backgroundImage = '';
         try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
@@ -419,7 +416,7 @@ Ukryta podstrona(dodatek): K3Y4P</pre>
       btn.addEventListener('click', () => {
         const expanded = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!expanded));
-        panel.hidden = expanded; // pokaż, jeśli było ukryte
+        panel.hidden = expanded;
       });
     })();
   </script>
