@@ -322,30 +322,4 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Wymuś kolor tła strony (nadpisanie, gdy coś go nadpisuje)
-  document.documentElement.style.setProperty('--bg', '#222');
-  document.body.style.backgroundColor = '#222';
-
-  // Dodaj dodatkowy przycisk i link w sekcji FENIX
-  const target = document.querySelector('#fenix .btn-wrap') || document.querySelector('#fenix');
-  if (target) {
-    const newBtn = document.createElement('a');
-    newBtn.href = 'https://example.com';
-    newBtn.target = '_blank';
-    newBtn.rel = 'noopener noreferrer';
-    newBtn.className = 'btn secondary';
-    newBtn.textContent = 'Dodatkowy link';
-    if (target.classList.contains('btn-wrap')) {
-      target.appendChild(newBtn);
-    } else {
-      const wrap = document.createElement('div');
-      wrap.className = 'btn-wrap';
-      wrap.appendChild(newBtn);
-      target.appendChild(wrap);
-    }
-  }
-});
-</script>
 </html>
