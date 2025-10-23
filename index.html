@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Zuzanna Klimas — Portfolio</title>
 
   <!-- Google Fonts -->
@@ -18,6 +18,12 @@
       --panel: #4c4f69;
       --panel-contrast: rgba(0,0,0,0.25);
       --popover-bg: rgba(10,10,10,0.9);
+
+      /* Płynne odstępy i typografia */
+      --space-1: clamp(0.75rem, 1.2vw, 1rem);
+      --space-2: clamp(1rem, 2.2vw, 1.5rem);
+      --space-3: clamp(1.5rem, 2.8vw, 2rem);
+      --space-4: clamp(2rem, 3.6vw, 3rem);
     }
 
     *{ box-sizing: border-box; }
@@ -27,6 +33,8 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      /* Płynna baza fontu */
+      font-size: clamp(15px, calc(0.9rem + 0.25vw), 18px);
       line-height: 1.65;
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
@@ -38,6 +46,10 @@
       color: var(--accent);
       margin: 0 0 0.5rem 0;
       line-height: 1.2;
+    }
+    /* Płynne rozmiary nagłówków w treści */
+    .title h2{
+      font-size: clamp(1.35rem, 2.1vw, 1.75rem);
     }
     p{ margin: 0 0 1rem 0; }
     a{
@@ -55,18 +67,26 @@
     /* Hero */
     .hero{
       position: relative;
+      /* Fallback + dynamic viewport height dla mobilnych pasków narzędzi */
       min-height: 100vh;
+      min-height: 100dvh;
       background: #000 url('hero-bg.jpg') center/cover no-repeat fixed;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+
+      /* Płynny padding + bezpieczne strefy przy notchu */
+      padding: var(--space-3);
+      padding-left: max(var(--space-3), env(safe-area-inset-left));
+      padding-right: max(var(--space-3), env(safe-area-inset-right));
+      padding-top: max(var(--space-3), env(safe-area-inset-top));
+      padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
     }
     .hero .overlay{
       position: relative;
       width: min(92%, 900px);
       background: rgba(0,0,0,0.6);
-      padding: clamp(1.25rem, 3vw, 2.5rem);
+      padding: var(--space-3);
       border-radius: 18px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.45);
       text-align: center;
@@ -88,7 +108,10 @@
       z-index: 0;
       transition: opacity .25s ease;
     }
-    .hero .overlay > *{ position: relative; z-index: 1; }
+    .hero .overlay > *{
+      position: relative;
+      z-index: 1;
+    }
     .hero h1{
       font-size: clamp(2rem, 6vw, 4rem);
       letter-spacing: 0.5px;
@@ -103,7 +126,8 @@
     /* Main content wrapper */
     .content{
       width: min(900px, 92%);
-      margin: 2rem auto 3rem auto;
+      /* Płynne marginesy pionowe */
+      margin: var(--space-3) auto var(--space-4) auto;
       background: var(--panel);
       border-radius: 18px;
       box-shadow: 0 16px 50px rgba(0,0,0,0.35);
@@ -112,13 +136,16 @@
     }
 
     section.section{
-      padding: 2rem;
+      padding: clamp(1.25rem, 2.2vw, 2rem);
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    section.section:last-child{ border-bottom: none; }
+    section.section:last-child{
+      border-bottom: none;
+    }
 
-    .title{ margin-bottom: 1rem; }
-    .title h2{ margin-bottom: 0.35rem; }
+    .title{
+      margin-bottom: var(--space-1);
+    }
     .line{
       width: 90px;
       height: 3px;
@@ -129,8 +156,8 @@
     /* Grid / two-column layouts */
     .grid-2{
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: var(--space-2);
       align-items: start;
     }
 
@@ -148,6 +175,7 @@
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
+      min-height: 44px; /* lepsza dostępność na dotyk */
     }
     .btn:hover{
       transform: translateY(-2px);
@@ -156,7 +184,7 @@
       filter: brightness(1.02);
     }
 
-    /* Stabilny układ przycisków (Grid) */
+    /* Stabilny, responsywny układ przycisków (Grid) */
     .btn-wrap{
       position: relative;
       display: grid;
@@ -165,7 +193,6 @@
       align-items: center;
       margin-top: 1rem;
     }
-    /* Ostatni przycisk ląduje w kolumnie 5 (prawa strona) */
     .btn.push-right{
       grid-column: 5;
       justify-self: end;
@@ -182,7 +209,9 @@
       outline: none;
     }
     details.hint summary::-webkit-details-marker{ display: none; }
-    details.hint[open] summary.btn{ filter: brightness(0.98); }
+    details.hint[open] summary.btn{
+      filter: brightness(0.98);
+    }
     .hint .pop{
       position: absolute;
       top: calc(100% + 12px);
@@ -250,7 +279,7 @@
     footer{
       text-align: center;
       color: #ddd;
-      padding: 2rem 1rem 3rem;
+      padding: var(--space-3) var(--space-2) calc(var(--space-4) + 0.5rem);
     }
     footer .links{
       display: inline-flex;
@@ -258,13 +287,17 @@
       align-items: center;
       margin-top: 0.4rem;
     }
-    footer a{ font-weight: 600; }
+    footer a{
+      font-weight: 600;
+    }
 
     /* Responsive */
     @media (max-width: 860px){
-      .grid-2{ grid-template-columns: 1fr; }
+      .grid-2{
+        grid-template-columns: 1fr;
+      }
       .btn-wrap{
-        grid-template-columns: 1fr; /* układ w kolumnie */
+        grid-template-columns: 1fr;
         justify-items: center;
       }
       .btn.push-right{
@@ -281,11 +314,17 @@
         pointer-events: auto !important;
       }
       .hint .pop::before,
-      .hint .pop::after{ display: none; }
+      .hint .pop::after{
+        display: none;
+      }
     }
     @media (max-width: 600px){
-      .hero{ background-attachment: scroll; }
-      section.section{ padding: 1.5rem; }
+      .hero{
+        background-attachment: scroll; /* płynniej na mobile */
+      }
+      section.section{
+        padding: var(--space-2);
+      }
     }
 
     /* Motion preferences */
@@ -325,11 +364,11 @@
 
       <p>Grając w gry zawsze miałam hmm… może to zrobić inaczej? Zamiast zastanawiać się chciałam spróbować stworzyć swoje własne uniwersum. Tylko nie takie w mojej głowie czy na prywatnych notatkach. Coś, co sprawi, że ja oraz inne osoby nie będą mogły oderwać się od historii. Więc wymyśliłam uniwersum, które pierwotnie chce przelać na notatki, a gdy wszystko będzie idealne przeniosę do świata mojej własnej gry. Więc w międzyczasie gdy dopracowuje fabułę również uczę się podstaw programowania najpierw w 2d, a następnie w 3d. A poza samą fabułą chce też pobawić się światem przedstawionym. Bo czemu by nie stworzyć strony na której gracze będą mogli znaleźć specjalne informacje? Ułatwiające rozwiązanie zagadki. Albo miliona zadań pobocznych.</p>
 
-      <img src="fenix-login.png" alt="Zrzut ekranu logowania do projektu F.E.N.I.X." />
+      <img src="fenix-login.png" loading="lazy" alt="Zrzut ekranu logowania do projektu F.E.N.I.X." />
 
       <p>Zamysł historii jest prosty, bo opisze zarazę, która mutuje ludzkie DNA. Tylko tu robi się ciekawiej, bo kto powiedział, że główny bohater będzie bohaterem. A tak szczerze chce stworzyć historię, która pozwoli graczowi decydować co chce osiągnąć. Chce zostać bohaterem? A proszę bardzo. A może jednak tym klasycznym złolem? No pewnie. Bo dla mnie nie jest najważniejsze, by stworzyć coś. Ja chce stworzyć moją perełkę gdzie ważną rolę odegra efekt motyla.</p>
 
-      <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
+      <img src="mutacje.png" loading="lazy" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
       <div class="btn-wrap">
         <!-- 1) Interaktywny prototyp -->
@@ -374,14 +413,14 @@
 
       <div class="grid-2">
         <div>
-          <img src="gra-pixel.png" alt="Zrzut ekranu z pierwszej prostej gry w stylu pixel art" />
+          <img src="gra-pixel.png" loading="lazy" alt="Zrzut ekranu z pierwszej prostej gry w stylu pixel art" />
         </div>
         <div>
           <p>Pierwsza gra… była. Jednak nie zrobiłam ją by była jakkolwiek rozbudowana. To był jedynie test dla mnie czy spodoba mi się to. I wiecie co? Mimo że czasem chciałam wyrzucić laptopa to wracałam po kilku minutach i naprawiałam błąd. Podsumowując dzięki tej niby głupiej bardzo krótkiej gierce poczułam, że a może rozbudować to? Pobawić się na dłuższy czas. Bo możliwość połączenia zainteresowania pisaniem jakichś opowiadań z zabawą z programowaniem. Brzmi idealnie.</p>
         </div>
       </div>
 
-      <div class="btn-center">
+      <div class="btn-center" style="display:flex; justify-content:center; margin-top: var(--space-1);">
         <a class="btn" href="https://teal-gecko-d3aaef.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz demo gry w nowej karcie">Zobacz Demo Gry</a>
       </div>
     </section>
@@ -395,7 +434,7 @@
 
       <p>W samym pisaniu mam już długie doświadczenie, bo w wieku ok. 12 lat zaczęłam pisać pierwsze krótkie opowiadania na moich prywatnych notatkach. Natomiast w wieku 15 lat napisałam swoją pierwszą historię, która we wrześniu tego roku osiągnęła 100 tysięcy wyświetleń. A co dla mnie najmilsze to każdego dnia od kilku lat dzień w dzień moja historia jest czytana. Nie było dnia by nikt nie czytał chociaż jednego rozdziału.</p>
 
-      <div class="btn-center">
+      <div class="btn-center" style="display:flex; justify-content:center; margin-top: var(--space-1);">
         <a class="btn" href="https://1drv.ms/w/c/8a748e6994330eb3/ERUDOOCbuUpJpEm5x0KbwfsBEtama_iYV26p-vrU47x_CA?e=YI4Px0" target="_blank" rel="noopener noreferrer" aria-label="Przeczytaj fragment historii w nowej karcie">Przeczytaj Fragment</a>
       </div>
     </section>
@@ -409,7 +448,7 @@
 
       <div class="grid-2">
         <div>
-          <img src="gra-topdown.png" alt="Zrzut ekranu z drugiej gry typu top-down" />
+          <img src="gra-topdown.png" loading="lazy" alt="Zrzut ekranu z drugiej gry typu top-down" />
         </div>
         <div>
           <p>Druga gierka, na której wciąż uczę się nowych dodatków również nie powstałaby stworzyć na niej fabułę. Dzięki niej odkryłam masę fajnych opcji, które będę mogła przenieść na swój ostateczny projekt, czyli moja gra w 3d według mojego uniwersum. No i przy okazji nauczyłam się, by mimo kolejnego błędu nie podawać się oraz by na spokojnie do tego podejść.</p>
