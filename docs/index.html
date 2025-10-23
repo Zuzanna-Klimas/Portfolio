@@ -246,45 +246,48 @@
 
       <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
-  <table role="presentation" aria-label="Skróty">
+ <table role="presentation" aria-label="Skróty">
   <tr>
     <td>
-      <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer">
+      <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">
         Interaktywny Prototyp
       </a>
     </td>
     <td>
-      <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer">
+      <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">
         Podpowiedzi do strony
       </a>
     </td>
-
-    <!-- ZAMIANA details -> przycisk otwierający popover -->
     <td>
-      <button type="button" class="btn" popovertarget="odp-pop" popovertargetaction="toggle" aria-haspopup="dialog">
-        Odpowiedzi do strony
-      </button>
-    </td>
-
-    <td>
-      <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer">
-        Krótka Historyjka
-      </a>
-    </td>
+  <details class="hint" style="position: relative; display: inline-block;">
+    <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
+    <div class="pop" role="note" aria-live="polite"
+         style="
+           position: absolute;
+           top: calc(100% + 8px);
+           left: 0;                /* jeśli wolisz wyrównać do prawej: zamień na 'right: 0' i usuń 'left' */
+           z-index: 9999;
+           background: #111;
+           color: #fff;
+           border: 1px solid #333;
+           border-radius: 8px;
+           padding: 12px 14px;
+           box-shadow: 0 8px 24px rgba(0,0,0,.2);
+           max-width: min(90vw, 520px);
+           min-width: 260px;
+           white-space: normal;
+         ">
+      <h4 style="margin: 0 0 8px; font-size: 1rem; font-weight: 600;">Dane dostępowe i wskazówki</h4>
+      <div style="margin: 4px 0;"><b>Login:</b> Victor_Noctar</div>
+      <div style="margin: 4px 0;"><b>Hasło:</b> W4terzwijn</div>
+      <div style="margin: 4px 0;"><b>Przykładowy ukryty raport:</b> 5483</div>
+      <div style="margin: 4px 0;"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
+      <div style="margin-top: 8px; opacity:.8;">Aby zamknąć, kliknij ponownie „Odpowiedzi do strony”.</div>
+    </div>
+  </details>
+</td>
   </tr>
 </table>
-
-<!-- Popover z danymi – wstaw pod tabelą -->
-<div id="odp-pop" popover>
-  <h4>Dane dostępowe i wskazówki</h4>
-  <div><b>Login:</b> Victor_Noctar</div>
-  <div><b>Hasło:</b> W4terzwijn</div>
-  <div><b>Przykładowy ukryty raport:</b> 5483</div>
-  <div><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
-  <p>
-    <button type="button" popovertarget="odp-pop" popovertargetaction="hide">Zamknij</button>
-  </p>
-</div>
 
 
     <!-- Sekcja 2 -->
