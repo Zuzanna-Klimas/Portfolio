@@ -13,9 +13,9 @@
   <style>
     :root{
       /* Kolory */
-      --bg: #2b225f;        /* fiolet tła strony */
-      --text: #ffffff;      /* biały tekst */
-      --accent: #FFD700;    /* złoty akcent */
+      --bg: #2b225f;        /* tło strony: fiolet */
+      --text: #ffffff;      /* tekst: biały */
+      --accent: #FFD700;    /* akcent: złoty */
       --panel: #4c4f69;     /* ciemny, zgaszony fiolet panelu */
       --panel-contrast: rgba(0,0,0,0.25);
       --popover-bg: rgba(10,10,10,0.9);
@@ -104,7 +104,6 @@
       border-radius: 18px;
       box-shadow: 0 16px 50px rgba(0,0,0,0.35);
       border: 1px solid var(--panel-contrast);
-      /* brak overflow: hidden -> nic nie utnie */
     }
 
     section.section{
@@ -124,7 +123,7 @@
       align-items: start;
     }
 
-    /* Buttons */
+    /* Buttons (uniwersalne) */
     .btn{
       display: inline-block;
       padding: 0.78rem 1.05rem;
@@ -147,26 +146,32 @@
       filter: brightness(1.02);
     }
 
-    /* Stabilny układ przycisków: 2 linie (koniec z przycinaniem) */
-    .btn-stack{
+    /* 4 przyciski w JEDNEJ LINII (kompakt) */
+    .btn-row{
       display: grid;
-      gap: 0.75rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.6rem;
+      align-items: stretch;
       margin-top: 1rem;
+      overflow-x: auto;      /* na bardzo wąskich ekranach można przewinąć, ale zawsze 1 linia */
+      padding-bottom: 0.15rem;
     }
-    .btn-line{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
+    .btn-row > *{ min-width: 0; } /* pozwól się ścisnąć w kolumnie */
+    .btn-row .btn,
+    .btn-row summary.btn{
+      width: 100%;
+      padding: 0.55rem 0.7rem;                     /* mniejszy padding */
+      font-size: clamp(0.82rem, 1vw, 0.92rem);     /* mniejszy font */
+      line-height: 1.2;
+      border-radius: 10px;
     }
-    .btn-line.right{
-      justify-content: flex-end; /* Krótka Historyjka po prawej */
-    }
+    .btn-row details.hint{ width: 100%; }          /* element details też w kolumnie */
+    .btn-row details.hint summary.btn{ display: block; }
 
     /* Popover (dymek) na details/summary */
     details.hint{
       position: relative;
-      display: inline-block;
+      display: block;
       z-index: 5;
     }
     details.hint summary{ list-style: none; outline: none; }
@@ -174,7 +179,7 @@
     details.hint[open] summary.btn{ filter: brightness(0.98); }
     .hint .pop{
       position: absolute;
-      top: calc(100% + 12px);
+      top: calc(100% + 10px);
       left: 0;
       width: min(560px, 92vw);
       background: var(--popover-bg);
@@ -228,11 +233,7 @@
       padding: 0.5rem 0.65rem;
       border-radius: 10px;
     }
-    .hint .kv b{
-      color: var(--accent);
-      font-weight: 700;
-      margin-right: .35rem;
-    }
+    .hint .kv b{ color: var(--accent); font-weight: 700; margin-right: .35rem; }
 
     /* Footer */
     footer{
@@ -248,10 +249,9 @@
     }
     footer a{ font-weight: 600; }
 
-    /* Responsive */
+    /* Responsive (czytelny dymek na mobile) */
     @media (max-width: 860px){
       .grid-2{ grid-template-columns: 1fr; }
-      .btn-line.right{ justify-content: center; } /* na wąskich wycentruj */
       .hint .pop{
         position: static;
         width: 100%;
@@ -262,10 +262,9 @@
       }
       .hint .pop::before,
       .hint .pop::after{ display: none; }
-      .hero{ background-attachment: scroll; } /* płynniej na mobile */
+      .hero{ background-attachment: scroll; }
     }
 
-    /* Motion preferences */
     @media (prefers-reduced-motion: reduce){
       *{
         animation: none !important;
@@ -279,7 +278,7 @@
 
   <!-- HERO -->
   <header class="hero" role="banner" aria-label="Sekcja powitalna">
-    <!-- Opcjonalne tło w panelu:
+    <!-- Aby dodać zdjęcie w tle panelu:
          <div class="overlay" style="--hero-photo: url('portret.jpg'); --hero-photo-opacity: .45">
     -->
     <div class="overlay">
@@ -305,32 +304,24 @@
 
       <img src="mutacje.png" loading="lazy" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
-      <!-- Układ przycisków: 2 linie -->
-      <div class="btn-stack">
-        <div class="btn-line">
-          <!-- 1) Interaktywny prototyp -->
-          <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
+      <!-- 4 przyciski w jednej linii -->
+      <div class="btn-row">
+        <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
 
-          <!-- 2) Podpowiedzi do strony (Canva) -->
-          <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
+        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
 
-          <!-- 3) Odpowiedzi do strony (dymek) -->
-          <details class="hint">
-            <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
-            <div class="pop" role="note" aria-live="polite">
-              <h4>Dane dostępowe i wskazówki</h4>
-              <div class="kv"><b>Login:</b> Victor_Noctar</div>
-              <div class="kv"><b>Hasło:</b> W4terzwijn</div>
-              <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
-              <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
-            </div>
-          </details>
-        </div>
+        <details class="hint">
+          <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
+          <div class="pop" role="note" aria-live="polite">
+            <h4>Dane dostępowe i wskazówki</h4>
+            <div class="kv"><b>Login:</b> Victor_Noctar</div>
+            <div class="kv"><b>Hasło:</b> W4terzwijn</div>
+            <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
+            <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
+          </div>
+        </details>
 
-        <div class="btn-line right">
-          <!-- 4) Krótka Historyjka (osobny rząd, po prawej) -->
-          <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
-        </div>
+        <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
       </div>
     </section>
 
