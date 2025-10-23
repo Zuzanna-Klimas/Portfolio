@@ -104,7 +104,7 @@
       border-radius: 18px;
       box-shadow: 0 16px 50px rgba(0,0,0,0.35);
       border: 1px solid var(--panel-contrast);
-      /* Usunięte overflow: hidden — nic nie będzie przycinane */
+      /* brak overflow: hidden -> nic nie utnie */
     }
 
     section.section{
@@ -147,16 +147,21 @@
       filter: brightness(1.02);
     }
 
-    /* Stabilny układ przycisków: FLEX + wrap (bez przycinania) */
-    .btn-wrap{
-      position: relative;
+    /* Stabilny układ przycisków: 2 linie (koniec z przycinaniem) */
+    .btn-stack{
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .btn-line{
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
-      margin-top: 1rem;
     }
-    .btn.push-right{ margin-left: auto; }
+    .btn-line.right{
+      justify-content: flex-end; /* Krótka Historyjka po prawej */
+    }
 
     /* Popover (dymek) na details/summary */
     details.hint{
@@ -246,9 +251,7 @@
     /* Responsive */
     @media (max-width: 860px){
       .grid-2{ grid-template-columns: 1fr; }
-      .btn-wrap{ justify-content: center; }
-      .btn.push-right{ margin-left: 0; } /* na telefonach wyśrodkuj */
-      /* Dymek pod przyciskiem jako blok */
+      .btn-line.right{ justify-content: center; } /* na wąskich wycentruj */
       .hint .pop{
         position: static;
         width: 100%;
@@ -302,27 +305,32 @@
 
       <img src="mutacje.png" loading="lazy" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
-      <div class="btn-wrap">
-        <!-- 1) Interaktywny prototyp -->
-        <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
+      <!-- Układ przycisków: 2 linie -->
+      <div class="btn-stack">
+        <div class="btn-line">
+          <!-- 1) Interaktywny prototyp -->
+          <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
 
-        <!-- 2) Podpowiedzi do strony (Canva) -->
-        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
+          <!-- 2) Podpowiedzi do strony (Canva) -->
+          <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
 
-        <!-- 3) Odpowiedzi do strony (dymek) -->
-        <details class="hint">
-          <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
-          <div class="pop" role="note" aria-live="polite">
-            <h4>Dane dostępowe i wskazówki</h4>
-            <div class="kv"><b>Login:</b> Victor_Noctar</div>
-            <div class="kv"><b>Hasło:</b> W4terzwijn</div>
-            <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
-            <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
-          </div>
-        </details>
+          <!-- 3) Odpowiedzi do strony (dymek) -->
+          <details class="hint">
+            <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
+            <div class="pop" role="note" aria-live="polite">
+              <h4>Dane dostępowe i wskazówki</h4>
+              <div class="kv"><b>Login:</b> Victor_Noctar</div>
+              <div class="kv"><b>Hasło:</b> W4terzwijn</div>
+              <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
+              <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
+            </div>
+          </details>
+        </div>
 
-        <!-- 4) Krótka Historyjka (po prawej) -->
-        <a class="btn push-right" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
+        <div class="btn-line right">
+          <!-- 4) Krótka Historyjka (osobny rząd, po prawej) -->
+          <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
+        </div>
       </div>
     </section>
 
