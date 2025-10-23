@@ -12,10 +12,12 @@
 
   <style>
     :root{
-      --bg: #222;
+      /* Jasny fiolet + białe napisy */
+      --bg: linear-gradient(180deg, #9A8CFF 0%, #6A5BD6 100%);
       --text: #ffffff;
       --accent: #FFD700;
-      --panel: #4c4f69;
+      /* Panel nieco ciemniejszy fiolet dla kontrastu */
+      --panel: rgba(90, 76, 204, 0.92);
       --panel-contrast: rgba(0,0,0,0.25);
     }
 
@@ -97,11 +99,12 @@
       box-shadow: 0 16px 50px rgba(0,0,0,0.35);
       border: 1px solid var(--panel-contrast);
       overflow: hidden;
+      backdrop-filter: blur(2px);
     }
 
     section.section{
       padding: 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     section.section:last-child{
       border-bottom: none;
@@ -129,7 +132,7 @@
       display: inline-block;
       padding: 0.78rem 1.05rem;
       background: var(--accent);
-      color: #141414;
+      color: #141414; /* ciemny tekst na złotym dla czytelności */
       font-weight: 700;
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,0.2);
@@ -177,7 +180,7 @@
     .reveal{
       margin-top: 0.75rem;
       background: rgba(0,0,0,0.28);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 12px;
       padding: 1rem;
     }
@@ -186,12 +189,13 @@
       white-space: pre-wrap;
       font-family: 'Roboto Mono', monospace;
       font-size: 0.98rem;
+      color: #fff;
     }
 
     /* Footer */
     footer{
       text-align: center;
-      color: #ddd;
+      color: #ffffff;
       padding: 2rem 1rem 3rem;
     }
     footer .links{
