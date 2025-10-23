@@ -1,278 +1,272 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Zuzanna Klimas — Portfolio</title>
+<style>
+  :root{
+    /* Kolory */
+    --bg: #2b225f;        /* tło strony: fiolet */
+    --text: #ffffff;      /* tekst: biały */
+    --accent: #FFD700;    /* akcent: złoty */
+    --panel: #4c4f69;     /* ciemny, zgaszony fiolet panelu */
+    --panel-contrast: rgba(0,0,0,0.25);
+    --popover-bg: rgba(10,10,10,0.9);
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+    /* Płynne odstępy i typografia */
+    --space-1: clamp(0.75rem, 1.2vw, 1rem);
+    --space-2: clamp(1rem, 2.2vw, 1.5rem);
+    --space-3: clamp(1.5rem, 2.8vw, 2rem);
+    --space-4: clamp(2rem, 3.6vw, 3rem);
+  }
 
-  <style>
-    :root{
-      /* Kolory */
-      --bg: #2b225f;        /* tło strony: fiolet */
-      --text: #ffffff;      /* tekst: biały */
-      --accent: #FFD700;    /* akcent: złoty */
-      --panel: #4c4f69;     /* ciemny, zgaszony fiolet panelu */
-      --panel-contrast: rgba(0,0,0,0.25);
-      --popover-bg: rgba(10,10,10,0.9);
+  *{ box-sizing: border-box; }
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: clamp(15px, calc(0.9rem + 0.25vw), 18px);
+    line-height: 1.65;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3{
+    font-family: 'Roboto Mono', monospace;
+    color: var(--accent);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+  }
+  .title h2{ font-size: clamp(1.35rem, 2.1vw, 1.75rem); }
+  p{ margin: 0 0 1rem 0; }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+  img{ max-width: 100%; height: auto; display: block; border-radius: 12px; }
 
-      /* Płynne odstępy i typografia */
-      --space-1: clamp(0.75rem, 1.2vw, 1rem);
-      --space-2: clamp(1rem, 2.2vw, 1.5rem);
-      --space-3: clamp(1.5rem, 2.8vw, 2rem);
-      --space-4: clamp(2rem, 3.6vw, 3rem);
-    }
+  /* Hero */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: #000 url('hero-bg.jpg') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+    padding-left: max(var(--space-3), env(safe-area-inset-left));
+    padding-right: max(var(--space-3), env(safe-area-inset-right));
+    padding-top: max(var(--space-3), env(safe-area-inset-top));
+    padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  }
+  .hero .overlay{
+    position: relative;
+    width: min(92%, 900px);
+    background: rgba(0,0,0,0.6);
+    padding: var(--space-3);
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    text-align: center;
+    backdrop-filter: saturate(120%) blur(2px);
+    overflow: hidden; /* tylko dla tła w pseudoelemencie */
+  }
+  /* Opcjonalne zdjęcie w tle panelu hero:
+     <div class="overlay" style="--hero-photo: url('portret.jpg'); --hero-photo-opacity: .45">
+  */
+  .hero .overlay::before{
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: var(--hero-photo, none) center/cover no-repeat;
+    filter: blur(10px) brightness(0.75) saturate(1.1);
+    opacity: var(--hero-photo-opacity, 0);
+    z-index: 0;
+    transition: opacity .25s ease;
+  }
+  .hero .overlay > *{ position: relative; z-index: 1; }
+  .hero h1{ font-size: clamp(2rem, 6vw, 4rem); letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+  .hero h2{ font-size: clamp(1.05rem, 2.8vw, 1.6rem); font-weight: 500; opacity: 0.95; }
 
-    *{ box-sizing: border-box; }
-    html, body{
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-size: clamp(15px, calc(0.9rem + 0.25vw), 18px);
-      line-height: 1.65;
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-    h1, h2, h3{
-      font-family: 'Roboto Mono', monospace;
-      color: var(--accent);
-      margin: 0 0 0.5rem 0;
-      line-height: 1.2;
-    }
-    .title h2{ font-size: clamp(1.35rem, 2.1vw, 1.75rem); }
-    p{ margin: 0 0 1rem 0; }
-    a{ color: var(--accent); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
-    img{ max-width: 100%; height: auto; display: block; border-radius: 12px; }
+  /* Main content wrapper */
+  .content{
+    width: min(900px, 92%);
+    margin: var(--space-3) auto var(--space-4) auto;
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+    border: 1px solid var(--panel-contrast);
+  }
 
-    /* Hero */
-    .hero{
-      position: relative;
-      min-height: 100vh;
-      min-height: 100dvh;
-      background: #000 url('hero-bg.jpg') center/cover no-repeat fixed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-3);
-      padding-left: max(var(--space-3), env(safe-area-inset-left));
-      padding-right: max(var(--space-3), env(safe-area-inset-right));
-      padding-top: max(var(--space-3), env(safe-area-inset-top));
-      padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
-    }
-    .hero .overlay{
-      position: relative;
-      width: min(92%, 900px);
-      background: rgba(0,0,0,0.6);
-      padding: var(--space-3);
-      border-radius: 18px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-      text-align: center;
-      backdrop-filter: saturate(120%) blur(2px);
-      overflow: hidden; /* tylko dla tła w pseudoelemencie */
-    }
-    /* Opcjonalne zdjęcie w tle panelu hero:
-       <div class="overlay" style="--hero-photo: url('portret.jpg'); --hero-photo-opacity: .45">
-    */
-    .hero .overlay::before{
-      content: "";
-      position: absolute;
-      inset: -20px;
-      background: var(--hero-photo, none) center/cover no-repeat;
-      filter: blur(10px) brightness(0.75) saturate(1.1);
-      opacity: var(--hero-photo-opacity, 0);
-      z-index: 0;
-      transition: opacity .25s ease;
-    }
-    .hero .overlay > *{ position: relative; z-index: 1; }
-    .hero h1{ font-size: clamp(2rem, 6vw, 4rem); letter-spacing: 0.5px; margin-bottom: 0.25rem; }
-    .hero h2{ font-size: clamp(1.05rem, 2.8vw, 1.6rem); font-weight: 500; opacity: 0.95; }
+  section.section{
+    padding: clamp(1.25rem, 2.2vw, 2rem);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  section.section:last-child{ border-bottom: none; }
 
-    /* Main content wrapper */
-    .content{
-      width: min(900px, 92%);
-      margin: var(--space-3) auto var(--space-4) auto;
-      background: var(--panel);
-      border-radius: 18px;
-      box-shadow: 0 16px 50px rgba(0,0,0,0.35);
-      border: 1px solid var(--panel-contrast);
-    }
+  .title{ margin-bottom: var(--space-1); }
+  .line{ width: 90px; height: 3px; background: var(--accent); border-radius: 2px; }
 
-    section.section{
-      padding: clamp(1.25rem, 2.2vw, 2rem);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    section.section:last-child{ border-bottom: none; }
+  /* Grid / two-column layouts */
+  .grid-2{
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: var(--space-2);
+    align-items: start;
+  }
 
-    .title{ margin-bottom: var(--space-1); }
-    .line{ width: 90px; height: 3px; background: var(--accent); border-radius: 2px; }
+  /* Buttons (uniwersalne) */
+  .btn{
+    display: inline-block;
+    padding: 0.78rem 1.05rem;
+    background: var(--accent);
+    color: #141414;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.2);
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    min-height: 44px;
+  }
+  .btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+    text-decoration: none;
+    filter: brightness(1.02);
+  }
 
-    /* Grid / two-column layouts */
-    .grid-2{
-      display: grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap: var(--space-2);
-      align-items: start;
-    }
+  /* 4 przyciski w JEDNEJ LINII (kompakt) */
+  .btn-row{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+    align-items: stretch;
+    margin-top: 1rem;
+    overflow-x: auto;      /* na bardzo wąskich ekranach można przewinąć, ale zawsze 1 linia */
+    padding-bottom: 0.15rem;
+  }
+  .btn-row > *{ min-width: 0; } /* pozwól się ścisnąć w kolumnie */
+  .btn-row .btn,
+  .btn-row summary.btn{
+    width: 100%;
+    padding: 0.55rem 0.7rem;                     /* mniejszy padding */
+    font-size: clamp(0.82rem, 1vw, 0.92rem);     /* mniejszy font */
+    line-height: 1.2;
+    border-radius: 10px;
+  }
+  .btn-row details.hint{ width: 100%; }          /* element details też w kolumnie */
+  .btn-row details.hint summary.btn{ display: block; }
 
-    /* Buttons (uniwersalne) */
-    .btn{
-      display: inline-block;
-      padding: 0.78rem 1.05rem;
-      background: var(--accent);
-      color: #141414;
-      font-weight: 700;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.2);
-      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-      text-align: center;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      min-height: 44px;
-    }
-    .btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
-      text-decoration: none;
-      filter: brightness(1.02);
-    }
+  /* Popover (dymek) na details/summary */
+  details.hint{
+    position: relative;
+    display: block;
+    z-index: 5;
+  }
+  details.hint summary{ list-style: none; outline: none; }
+  details.hint summary::-webkit-details-marker{ display: none; }
+  details.hint[open] summary.btn{ filter: brightness(0.98); }
+  .hint .pop{
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: min(560px, 92vw);
+    background: var(--popover-bg);
+    color: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+    padding: 1rem 1.1rem;
+    transform: translateY(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  details.hint[open] .pop{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .hint .pop::before{
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    border: 0 solid transparent;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-bottom: 10px solid rgba(255,255,255,0.12);
+    filter: blur(0.2px);
+  }
+  .hint .pop::after{
+    content: "";
+    position: absolute;
+    top: -9px;
+    left: 19px;
+    border: 0 solid transparent;
+    border-left-width: 9px;
+    border-right-width: 9px;
+    border-bottom: 9px solid var(--popover-bg);
+  }
+  .hint .pop h4{
+    margin: 0 0 .35rem 0;
+    font-family: 'Roboto Mono', monospace;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+  .hint .kv{
+    margin: 0.25rem 0;
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.2);
+    padding: 0.5rem 0.65rem;
+    border-radius: 10px;
+  }
+  .hint .kv b{ color: var(--accent); font-weight: 700; margin-right: .35rem; }
 
-    /* 4 przyciski w JEDNEJ LINII (kompakt) */
-    .btn-row{
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.6rem;
-      align-items: stretch;
-      margin-top: 1rem;
-      overflow-x: auto;      /* na bardzo wąskich ekranach można przewinąć, ale zawsze 1 linia */
-      padding-bottom: 0.15rem;
-    }
-    .btn-row > *{ min-width: 0; } /* pozwól się ścisnąć w kolumnie */
-    .btn-row .btn,
-    .btn-row summary.btn{
-      width: 100%;
-      padding: 0.55rem 0.7rem;                     /* mniejszy padding */
-      font-size: clamp(0.82rem, 1vw, 0.92rem);     /* mniejszy font */
-      line-height: 1.2;
-      border-radius: 10px;
-    }
-    .btn-row details.hint{ width: 100%; }          /* element details też w kolumnie */
-    .btn-row details.hint summary.btn{ display: block; }
+  /* Footer */
+  footer{
+    text-align: center;
+    color: #ddd;
+    padding: var(--space-3) var(--space-2) calc(var(--space-4) + 0.5rem);
+  }
+  footer .links{
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.4rem;
+  }
+  footer a{ font-weight: 600; }
 
-    /* Popover (dymek) na details/summary */
-    details.hint{
-      position: relative;
-      display: block;
-      z-index: 5;
-    }
-    details.hint summary{ list-style: none; outline: none; }
-    details.hint summary::-webkit-details-marker{ display: none; }
-    details.hint[open] summary.btn{ filter: brightness(0.98); }
+  /* Responsive (czytelny dymek na mobile) */
+  @media (max-width: 860px){
+    .grid-2{ grid-template-columns: 1fr; }
+
+    /* Na mobile dymek ma być blokiem pod przyciskiem, ale nadal tylko po otwarciu */
     .hint .pop{
-      position: absolute;
-      top: calc(100% + 10px);
-      left: 0;
-      width: min(560px, 92vw);
-      background: var(--popover-bg);
-      color: #fff;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.45);
-      padding: 1rem 1.1rem;
-      transform: translateY(8px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease, transform .2s ease;
+      position: static;
+      width: 100%;
+      margin-top: .65rem;
+      transform: none !important;
+      /* UWAGA: nie ustawiamy tu opacity/pointer-events */
     }
     details.hint[open] .pop{
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-    .hint .pop::before{
-      content: "";
-      position: absolute;
-      top: -10px;
-      left: 18px;
-      border: 0 solid transparent;
-      border-left-width: 10px;
-      border-right-width: 10px;
-      border-bottom: 10px solid rgba(255,255,255,0.12);
-      filter: blur(0.2px);
-    }
-    .hint .pop::after{
-      content: "";
-      position: absolute;
-      top: -9px;
-      left: 19px;
-      border: 0 solid transparent;
-      border-left-width: 9px;
-      border-right-width: 9px;
-      border-bottom: 9px solid var(--popover-bg);
-    }
-    .hint .pop h4{
-      margin: 0 0 .35rem 0;
-      font-family: 'Roboto Mono', monospace;
-      color: var(--accent);
-      font-size: 1rem;
-    }
-    .hint .kv{
-      margin: 0.25rem 0;
-      font-family: 'Roboto Mono', monospace;
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.2);
-      padding: 0.5rem 0.65rem;
-      border-radius: 10px;
-    }
-    .hint .kv b{ color: var(--accent); font-weight: 700; margin-right: .35rem; }
-
-    /* Footer */
-    footer{
-      text-align: center;
-      color: #ddd;
-      padding: var(--space-3) var(--space-2) calc(var(--space-4) + 0.5rem);
-    }
-    footer .links{
-      display: inline-flex;
-      gap: 1rem;
-      align-items: center;
-      margin-top: 0.4rem;
-    }
-    footer a{ font-weight: 600; }
-
-    /* Responsive (czytelny dymek na mobile) */
-    @media (max-width: 860px){
-      .grid-2{ grid-template-columns: 1fr; }
-      .hint .pop{
-        position: static;
-        width: 100%;
-        margin-top: .65rem;
-        transform: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-      }
-      .hint .pop::before,
-      .hint .pop::after{ display: none; }
-      .hero{ background-attachment: scroll; }
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
-    @media (prefers-reduced-motion: reduce){
-      *{
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
-      }
+    .hint .pop::before,
+    .hint .pop::after{ display: none; }
+    .hero{ background-attachment: scroll; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
     }
-  </style>
+  }
+</style>
 </head>
 <body>
 
