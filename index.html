@@ -1,283 +1,239 @@
-<style>
-  :root{
-    /* Kolory */
-    --bg: #2b225f;        /* tło strony: fiolet */
-    --text: #ffffff;      /* tekst: biały */
-    --accent: #FFD700;    /* akcent: złoty */
-    --panel: #4c4f69;     /* ciemny, zgaszony fiolet panelu */
-    --panel-contrast: rgba(0,0,0,0.25);
-    --popover-bg: rgba(10,10,10,0.9);
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zuzanna Klimas — Portfolio</title>
 
-    /* Płynne odstępy i typografia */
-    --space-1: clamp(0.75rem, 1.2vw, 1rem);
-    --space-2: clamp(1rem, 2.2vw, 1.5rem);
-    --space-3: clamp(1.5rem, 2.8vw, 2rem);
-    --space-4: clamp(2rem, 3.6vw, 3rem);
-  }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  *{ box-sizing: border-box; }
-  html, body{
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: clamp(15px, calc(0.9rem + 0.25vw), 18px);
-    line-height: 1.65;
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-  h1, h2, h3{
-    font-family: 'Roboto Mono', monospace;
-    color: var(--accent);
-    margin: 0 0 0.5rem 0;
-    line-height: 1.2;
-  }
-  .title h2{ font-size: clamp(1.35rem, 2.1vw, 1.75rem); }
-  p{ margin: 0 0 1rem 0; }
-  a{ color: var(--accent); text-decoration: none; }
-  a:hover{ text-decoration: underline; }
-  img{ max-width: 100%; height: auto; display: block; border-radius: 12px; }
-
-  /* Hero */
-  .hero{
-    position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: #000 url('hero-bg.jpg') center/cover no-repeat fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-3);
-    padding-left: max(var(--space-3), env(safe-area-inset-left));
-    padding-right: max(var(--space-3), env(safe-area-inset-right));
-    padding-top: max(var(--space-3), env(safe-area-inset-top));
-    padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
-  }
-  .hero .overlay{
-    position: relative;
-    width: min(92%, 900px);
-    background: rgba(0,0,0,0.6);
-    padding: var(--space-3);
-    border-radius: 18px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-    text-align: center;
-    backdrop-filter: saturate(120%) blur(2px);
-    overflow: hidden; /* tylko dla tła w pseudoelemencie */
-  }
-  /* Opcjonalne zdjęcie w tle panelu hero:
-     <div class="overlay" style="--hero-photo: url('portret.jpg'); --hero-photo-opacity: .45">
-  */
-  .hero .overlay::before{
-    content: "";
-    position: absolute;
-    inset: -20px;
-    background: var(--hero-photo, none) center/cover no-repeat;
-    filter: blur(10px) brightness(0.75) saturate(1.1);
-    opacity: var(--hero-photo-opacity, 0);
-    z-index: 0;
-    transition: opacity .25s ease;
-  }
-  .hero .overlay > *{ position: relative; z-index: 1; }
-  .hero h1{ font-size: clamp(2rem, 6vw, 4rem); letter-spacing: 0.5px; margin-bottom: 0.25rem; }
-  .hero h2{ font-size: clamp(1.05rem, 2.8vw, 1.6rem); font-weight: 500; opacity: 0.95; }
-
-  /* Main content wrapper */
-  .content{
-    width: min(900px, 92%);
-    margin: var(--space-3) auto var(--space-4) auto;
-    background: var(--panel);
-    border-radius: 18px;
-    box-shadow: 0 16px 50px rgba(0,0,0,0.35);
-    border: 1px solid var(--panel-contrast);
-  }
-
-  section.section{
-    padding: clamp(1.25rem, 2.2vw, 2rem);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  section.section:last-child{ border-bottom: none; }
-
-  .title{ margin-bottom: var(--space-1); }
-  .line{ width: 90px; height: 3px; background: var(--accent); border-radius: 2px; }
-
-  /* Grid / two-column layouts */
-  .grid-2{
-    display: grid;
-    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-    gap: var(--space-2);
-    align-items: start;
-  }
-
-  /* Buttons (uniwersalne) */
-  .btn{
-    display: inline-block;
-    padding: 0.78rem 1.05rem;
-    background: var(--accent);
-    color: #141414;
-    font-weight: 700;
-    border-radius: 12px;
-    border: 1px solid rgba(0,0,0,0.2);
-    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-    text-align: center;
-    white-space: nowrap;
-    cursor: pointer;
-    user-select: none;
-    min-height: 44px;
-  }
-  .btn:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 10px 18px rgba(0,0,0,0.25);
-    text-decoration: none;
-    filter: brightness(1.02);
-  }
-
-  /* 4 przyciski w JEDNEJ LINII (kompakt) */
-  .btn-row{
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.6rem;
-    align-items: stretch;
-    margin-top: 1rem;
-    overflow-x: auto;      /* na bardzo wąskich ekranach można przewinąć, ale zawsze 1 linia */
-    padding-bottom: 0.15rem;
-  }
-  .btn-row > *{ min-width: 0; } /* pozwól się ścisnąć w kolumnie */
-  .btn-row .btn,
-  .btn-row summary.btn{
-    width: 100%;
-    padding: 0.55rem 0.7rem;                     /* mniejszy padding */
-    font-size: clamp(0.82rem, 1vw, 0.92rem);     /* mniejszy font */
-    line-height: 1.2;
-    border-radius: 10px;
-  }
-  .btn-row details.hint{ width: 100%; }          /* element details też w kolumnie */
-  .btn-row details.hint summary.btn{ display: block; }
-
-  /* Popover (dymek) na details/summary */
-  details.hint{
-    position: relative;
-    display: block;
-    z-index: 5;
-  }
-  details.hint summary{ list-style: none; outline: none; }
-  details.hint summary::-webkit-details-marker{ display: none; }
-  details.hint[open] summary.btn{ filter: brightness(0.98); }
-  .hint .pop{
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: min(560px, 92vw);
-    background: var(--popover-bg);
-    color: #fff;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 14px 36px rgba(0,0,0,0.45);
-    padding: 1rem 1.1rem;
-    transform: translateY(8px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s ease, transform .2s ease;
-  }
-  details.hint[open] .pop{
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .hint .pop::before{
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 18px;
-    border: 0 solid transparent;
-    border-left-width: 10px;
-    border-right-width: 10px;
-    border-bottom: 10px solid rgba(255,255,255,0.12);
-    filter: blur(0.2px);
-  }
-  .hint .pop::after{
-    content: "";
-    position: absolute;
-    top: -9px;
-    left: 19px;
-    border: 0 solid transparent;
-    border-left-width: 9px;
-    border-right-width: 9px;
-    border-bottom: 9px solid var(--popover-bg);
-  }
-  .hint .pop h4{
-    margin: 0 0 .35rem 0;
-    font-family: 'Roboto Mono', monospace;
-    color: var(--accent);
-    font-size: 1rem;
-  }
-  .hint .kv{
-    margin: 0.25rem 0;
-    font-family: 'Roboto Mono', monospace;
-    background: rgba(255,255,255,0.04);
-    border: 1px dashed rgba(255,255,255,0.2);
-    padding: 0.5rem 0.65rem;
-    border-radius: 10px;
-  }
-  .hint .kv b{ color: var(--accent); font-weight: 700; margin-right: .35rem; }
-
-  /* Footer */
-  footer{
-    text-align: center;
-    color: #ddd;
-    padding: var(--space-3) var(--space-2) calc(var(--space-4) + 0.5rem);
-  }
-  footer .links{
-    display: inline-flex;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 0.4rem;
-  }
-  footer a{ font-weight: 600; }
-
-  /* Responsive (czytelny dymek na mobile) */
-  @media (max-width: 860px){
-    .grid-2{ grid-template-columns: 1fr; }
-
-    /* Na mobile dymek ma być blokiem pod przyciskiem, ale nadal tylko po otwarciu */
-    .hint .pop{
-      position: static;
-      width: 100%;
-      margin-top: .65rem;
-      transform: none !important;
-      /* UWAGA: nie ustawiamy tu opacity/pointer-events */
-    }
-    details.hint[open] .pop{
-      opacity: 1 !important;
-      pointer-events: auto !important;
+  <style>
+    :root{
+      --bg: #222;
+      --text: #ffffff;
+      --accent: #FFD700;
+      --panel: #4c4f69;
+      --panel-contrast: rgba(0,0,0,0.25);
     }
 
-    .hint .pop::before,
-    .hint .pop::after{ display: none; }
-    .hero{ background-attachment: scroll; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{
-      animation: none !important;
-      transition: none !important;
-      scroll-behavior: auto !important;
+    *{ box-sizing: border-box; }
+    html, body{
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
-  }
-</style>
+    h1, h2, h3{
+      font-family: 'Roboto Mono', monospace;
+      color: var(--accent);
+      margin: 0 0 0.5rem 0;
+      line-height: 1.2;
+    }
+    p{ margin: 0 0 1rem 0; }
+    a{
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover{ text-decoration: underline; }
+    img{
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    /* Hero */
+    .hero{
+      position: relative;
+      min-height: 100vh;
+      background: #000 url('hero-bg.jpg') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .hero .overlay{
+      width: min(92%, 900px);
+      background: rgba(0,0,0,0.6);
+      padding: clamp(1.25rem, 3vw, 2.5rem);
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+      text-align: center;
+      backdrop-filter: saturate(120%) blur(2px);
+    }
+    .hero h1{
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    .hero h2{
+      font-size: clamp(1.05rem, 2.8vw, 1.6rem);
+      font-weight: 500;
+      opacity: 0.95;
+      margin-bottom: 0.5rem;
+    }
+    .hero-actions{
+      display: inline-flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+
+    /* Main content wrapper */
+    .content{
+      width: min(900px, 92%);
+      margin: 2rem auto 3rem auto;
+      background: var(--panel);
+      border-radius: 18px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+      border: 1px solid var(--panel-contrast);
+      overflow: hidden;
+    }
+
+    section.section{
+      padding: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    section.section:last-child{
+      border-bottom: none;
+    }
+
+    .title{
+      margin-bottom: 1rem;
+    }
+    .title h2{
+      margin-bottom: 0.35rem;
+    }
+    .line{
+      width: 90px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* Grid / two-column layouts */
+    .grid-2{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    /* Buttons */
+    .btn{
+      display: inline-block;
+      padding: 0.78rem 1.05rem;
+      background: var(--accent);
+      color: #141414;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.2);
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      text-align: center;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+      text-decoration: none;
+      filter: brightness(1.02);
+    }
+    .btn:focus-visible{
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+    .btn.secondary{
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .btn-wrap{
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .btn-center{
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    /* Footer */
+    footer{
+      text-align: center;
+      color: #ddd;
+      padding: 2rem 1rem 3rem;
+    }
+    footer .links{
+      display: inline-flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.4rem;
+    }
+    footer a{
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .grid-2{
+        grid-template-columns: 1fr;
+      }
+      .btn-wrap{
+        justify-content: center;
+      }
+    }
+    @media (max-width: 600px){
+      .hero{
+        background-attachment: scroll; /* smoother on mobile */
+      }
+      section.section{
+        padding: 1.5rem;
+      }
+    }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- HERO -->
   <header class="hero" role="banner" aria-label="Sekcja powitalna">
-    <!-- Aby dodać zdjęcie w tle panelu:
-         <div class="overlay" style="--hero-photo: url('portret.jpg'); --hero-photo-opacity: .45">
-    -->
     <div class="overlay">
       <h1>Zuzanna Klimas</h1>
       <h2>Game Designer &amp; World Builder</h2>
+
+      <!-- Dodatkowe akcje w Hero: link + zmiana tła -->
+      <div class="hero-actions" aria-label="Akcje w sekcji powitalnej">
+        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony (Canva) w nowej karcie">
+          Podpowiedź do strony
+        </a>
+
+        <!-- Przycisk do załadowania własnego tła dla hero -->
+        <label for="bgUpload" class="btn secondary" title="Załaduj własne zdjęcie w tle">
+          Zmień tło
+        </label>
+        <input id="bgUpload" type="file" accept="image/*" hidden aria-label="Wybierz obraz tła dla sekcji powitalnej" />
+      </div>
     </div>
   </header>
 
@@ -292,30 +248,16 @@
 
       <p>Grając w gry zawsze miałam hmm… może to zrobić inaczej? Zamiast zastanawiać się chciałam spróbować stworzyć swoje własne uniwersum. Tylko nie takie w mojej głowie czy na prywatnych notatkach. Coś, co sprawi, że ja oraz inne osoby nie będą mogły oderwać się od historii. Więc wymyśliłam uniwersum, które pierwotnie chce przelać na notatki, a gdy wszystko będzie idealne przeniosę do świata mojej własnej gry. Więc w międzyczasie gdy dopracowuje fabułę również uczę się podstaw programowania najpierw w 2d, a następnie w 3d. A poza samą fabułą chce też pobawić się światem przedstawionym. Bo czemu by nie stworzyć strony na której gracze będą mogli znaleźć specjalne informacje? Ułatwiające rozwiązanie zagadki. Albo miliona zadań pobocznych.</p>
 
-      <img src="fenix-login.png" loading="lazy" alt="Zrzut ekranu logowania do projektu F.E.N.I.X." />
+      <img src="fenix-login.png" alt="Zrzut ekranu logowania do projektu F.E.N.I.X." />
 
       <p>Zamysł historii jest prosty, bo opisze zarazę, która mutuje ludzkie DNA. Tylko tu robi się ciekawiej, bo kto powiedział, że główny bohater będzie bohaterem. A tak szczerze chce stworzyć historię, która pozwoli graczowi decydować co chce osiągnąć. Chce zostać bohaterem? A proszę bardzo. A może jednak tym klasycznym złolem? No pewnie. Bo dla mnie nie jest najważniejsze, by stworzyć coś. Ja chce stworzyć moją perełkę gdzie ważną rolę odegra efekt motyla.</p>
 
-      <img src="mutacje.png" loading="lazy" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
+      <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
-      <!-- 4 przyciski w jednej linii -->
-      <div class="btn-row">
+      <div class="btn-wrap">
         <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
-
-        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
-
-        <details class="hint">
-          <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
-          <div class="pop" role="note" aria-live="polite">
-            <h4>Dane dostępowe i wskazówki</h4>
-            <div class="kv"><b>Login:</b> Victor_Noctar</div>
-            <div class="kv"><b>Hasło:</b> W4terzwijn</div>
-            <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
-            <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
-          </div>
-        </details>
-
         <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
+        <a class="btn secondary" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony w nowej karcie">Podpowiedź do strony</a>
       </div>
     </section>
 
@@ -338,14 +280,14 @@
 
       <div class="grid-2">
         <div>
-          <img src="gra-pixel.png" loading="lazy" alt="Zrzut ekranu z pierwszej prostej gry w stylu pixel art" />
+          <img src="gra-pixel.png" alt="Zrzut ekranu z pierwszej prostej gry w stylu pixel art" />
         </div>
         <div>
           <p>Pierwsza gra… była. Jednak nie zrobiłam ją by była jakkolwiek rozbudowana. To był jedynie test dla mnie czy spodoba mi się to. I wiecie co? Mimo że czasem chciałam wyrzucić laptopa to wracałam po kilku minutach i naprawiałam błąd. Podsumowując dzięki tej niby głupiej bardzo krótkiej gierce poczułam, że a może rozbudować to? Pobawić się na dłuższy czas. Bo możliwość połączenia zainteresowania pisaniem jakichś opowiadań z zabawą z programowaniem. Brzmi idealnie.</p>
         </div>
       </div>
 
-      <div class="btn-center" style="display:flex; justify-content:center; margin-top: var(--space-1);">
+      <div class="btn-center">
         <a class="btn" href="https://teal-gecko-d3aaef.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz demo gry w nowej karcie">Zobacz Demo Gry</a>
       </div>
     </section>
@@ -359,7 +301,7 @@
 
       <p>W samym pisaniu mam już długie doświadczenie, bo w wieku ok. 12 lat zaczęłam pisać pierwsze krótkie opowiadania na moich prywatnych notatkach. Natomiast w wieku 15 lat napisałam swoją pierwszą historię, która we wrześniu tego roku osiągnęła 100 tysięcy wyświetleń. A co dla mnie najmilsze to każdego dnia od kilku lat dzień w dzień moja historia jest czytana. Nie było dnia by nikt nie czytał chociaż jednego rozdziału.</p>
 
-      <div class="btn-center" style="display:flex; justify-content:center; margin-top: var(--space-1);">
+      <div class="btn-center">
         <a class="btn" href="https://1drv.ms/w/c/8a748e6994330eb3/ERUDOOCbuUpJpEm5x0KbwfsBEtama_iYV26p-vrU47x_CA?e=YI4Px0" target="_blank" rel="noopener noreferrer" aria-label="Przeczytaj fragment historii w nowej karcie">Przeczytaj Fragment</a>
       </div>
     </section>
@@ -373,7 +315,7 @@
 
       <div class="grid-2">
         <div>
-          <img src="gra-topdown.png" loading="lazy" alt="Zrzut ekranu z drugiej gry typu top-down" />
+          <img src="gra-topdown.png" alt="Zrzut ekranu z drugiej gry typu top-down" />
         </div>
         <div>
           <p>Druga gierka, na której wciąż uczę się nowych dodatków również nie powstałaby stworzyć na niej fabułę. Dzięki niej odkryłam masę fajnych opcji, które będę mogła przenieść na swój ostateczny projekt, czyli moja gra w 3d według mojego uniwersum. No i przy okazji nauczyłam się, by mimo kolejnego błędu nie podawać się oraz by na spokojnie do tego podejść.</p>
@@ -405,6 +347,28 @@
   <script>
     // Aktualny rok w stopce
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Zmiana tła w sekcji HERO (lokalnie, bez wysyłania na serwer)
+    const bgUpload = document.getElementById('bgUpload');
+    const hero = document.querySelector('.hero');
+
+    if (bgUpload && hero) {
+      bgUpload.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        const url = URL.createObjectURL(file);
+        // Ustawiamy tylko obraz, reszta właściwości zostaje (pozycja/rozmiar/itp.)
+        hero.style.backgroundImage = `url('${url}')`;
+        hero.style.backgroundPosition = 'center';
+        hero.style.backgroundRepeat = 'no-repeat';
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundAttachment = (window.matchMedia('(max-width: 600px)').matches) ? 'scroll' : 'fixed';
+
+        // Opcjonalnie można dodać czyszczenie adresu po zmianie tła:
+        // URL.revokeObjectURL(url); // jeśli chcesz zwalniać pamięć po odczycie
+      });
+    }
   </script>
 </body>
 </html>
