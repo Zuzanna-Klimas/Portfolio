@@ -246,58 +246,26 @@
 
       <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
- /* 1 linia od lewej do prawej; na bardzo wąskich ekranach przewijanie poziome */
-.btn-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  overflow-x: auto;
-  padding: 8px 0;
-}
+   <!-- 4 przyciski w jednej linii -->
+  <div class="btn-row">
+    <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
 
-/* Spójny wygląd „przycisków” */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .6rem 1rem;
-  background: #222;
-  color: #fff;
-  text-decoration: none;
-  border: 1px solid #333;
-  border-radius: .6rem;
-  transition: background .2s, border-color .2s;
-  white-space: nowrap;
-}
-.btn:hover,
-.btn:focus-visible {
-  background: #333;
-  border-color: #555;
-  outline: none;
-}
+    <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
 
-/* Details jako „przycisk” + panel po rozwinięciu */
-.hint { position: relative; }
-.hint summary { list-style: none; cursor: pointer; }
-.hint summary::-webkit-details-marker,
-.hint summary::marker { display: none; }
+    <details class="hint">
+      <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
+      <div class="pop" role="note" aria-live="polite">
+        <h4>Dane dostępowe i wskazówki</h4>
+        <div class="kv"><b>Login:</b> Victor_Noctar</div>
+        <div class="kv"><b>Hasło:</b> W4terzwijn</div>
+        <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
+        <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
+      </div>
+    </details>
 
-/* Panel z danymi pojawia się pod przyciskiem w tym samym wierszu */
-.hint[open] .pop {
-  margin-top: .5rem;
-  padding: .75rem .9rem;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: .5rem;
-  color: #eee;
-  white-space: normal; /* dane mogą łamać linie */
-}
-.hint .pop h4 { margin: 0 0 .5rem; font-size: 1rem; }
-.hint .pop .kv { margin: .15rem 0; }
-.hint .pop b { font-weight: 600; }
-
+    <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
+  </div>
+</section>
 
 
     <!-- Sekcja 2 -->
