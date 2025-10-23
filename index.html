@@ -88,10 +88,7 @@
       z-index: 0;
       transition: opacity .25s ease;
     }
-    .hero .overlay > *{
-      position: relative;
-      z-index: 1;
-    }
+    .hero .overlay > *{ position: relative; z-index: 1; }
     .hero h1{
       font-size: clamp(2rem, 6vw, 4rem);
       letter-spacing: 0.5px;
@@ -118,16 +115,10 @@
       padding: 2rem;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    section.section:last-child{
-      border-bottom: none;
-    }
+    section.section:last-child{ border-bottom: none; }
 
-    .title{
-      margin-bottom: 1rem;
-    }
-    .title h2{
-      margin-bottom: 0.35rem;
-    }
+    .title{ margin-bottom: 1rem; }
+    .title h2{ margin-bottom: 0.35rem; }
     .line{
       width: 90px;
       height: 3px;
@@ -165,16 +156,20 @@
       filter: brightness(1.02);
     }
 
+    /* Stabilny układ przycisków (Grid) */
     .btn-wrap{
       position: relative;
-      display: flex;
+      display: grid;
+      grid-template-columns: auto auto auto 1fr auto; /* 1fr = elastyczny odstęp */
       gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
       align-items: center;
+      margin-top: 1rem;
     }
-    /* dociśnięcie ostatniego przycisku maksymalnie w prawo */
-    .btn.push-right{ margin-left: auto; }
+    /* Ostatni przycisk ląduje w kolumnie 5 (prawa strona) */
+    .btn.push-right{
+      grid-column: 5;
+      justify-self: end;
+    }
 
     /* Popover (dymek) na details/summary */
     details.hint{
@@ -187,9 +182,7 @@
       outline: none;
     }
     details.hint summary::-webkit-details-marker{ display: none; }
-    details.hint[open] summary.btn{
-      filter: brightness(0.98);
-    }
+    details.hint[open] summary.btn{ filter: brightness(0.98); }
     .hint .pop{
       position: absolute;
       top: calc(100% + 12px);
@@ -265,20 +258,19 @@
       align-items: center;
       margin-top: 0.4rem;
     }
-    footer a{
-      font-weight: 600;
-    }
+    footer a{ font-weight: 600; }
 
     /* Responsive */
     @media (max-width: 860px){
-      .grid-2{
-        grid-template-columns: 1fr;
-      }
+      .grid-2{ grid-template-columns: 1fr; }
       .btn-wrap{
-        justify-content: center;
+        grid-template-columns: 1fr; /* układ w kolumnie */
+        justify-items: center;
       }
-      .btn.push-right{ margin-left: 0; } /* na telefonach nie dopychamy do prawej */
-
+      .btn.push-right{
+        grid-column: auto;
+        justify-self: center;
+      }
       /* Dymek pod przyciskiem jako blok */
       .hint .pop{
         position: static;
@@ -289,17 +281,11 @@
         pointer-events: auto !important;
       }
       .hint .pop::before,
-      .hint .pop::after{
-        display: none;
-      }
+      .hint .pop::after{ display: none; }
     }
     @media (max-width: 600px){
-      .hero{
-        background-attachment: scroll; /* smoother on mobile */
-      }
-      section.section{
-        padding: 1.5rem;
-      }
+      .hero{ background-attachment: scroll; }
+      section.section{ padding: 1.5rem; }
     }
 
     /* Motion preferences */
@@ -364,7 +350,7 @@
           </div>
         </details>
 
-        <!-- 4) Krótka Historyjka (dociśnięta maks w prawo) -->
+        <!-- 4) Krótka Historyjka (po prawej) -->
         <a class="btn push-right" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
       </div>
     </section>
