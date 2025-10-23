@@ -319,26 +319,123 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Wymuś kolor tła strony (nadpisanie, gdy coś go nadpisuje)
-  document.documentElement.style.setProperty('--bg', '#222');
-  document.body.style.backgroundColor = '#222';
+  // Rok w stopce (jeśli element istnieje)
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Dodaj dodatkowy przycisk i link w sekcji FENIX
-  const target = document.querySelector('#fenix .btn-wrap') || document.querySelector('#fenix');
-  if (target) {
-    const newBtn = document.createElement('a');
-    newBtn.href = 'https://example.com';
-    newBtn.target = '_blank';
-    newBtn.rel = 'noopener noreferrer';
-    newBtn.className = 'btn secondary';
-    newBtn.textContent = 'Dodatkowy link';
-    if (target.classList.contains('btn-wrap')) {
-      target.appendChild(newBtn);
-    } else {
-      const wrap = document.createElement('div');
+  // 1) Ustawianie tła w sekcji HERO
+  const hero = document.querySelector('.hero');
+  const overlay = document.querySelector('.hero .overlay');
+
+  function applyHeroBg(url) {
+    if (!hero) return;
+    hero.style.backgroundImage = `url("${url}")`;
+    hero.style.backgroundPosition = 'center';
+    hero.style.backgroundSize = 'cover';
+    hero.style.backgroundRepeat = 'no-repeat';
+  }
+
+  // Przywróć zapisane tło (jeśli jest)
+  const savedDataUrl = localStorage.getItem('heroBgDataUrl');
+  const savedUrl = localStorage.getItem('heroBgUrl');
+  if (savedDataUrl) {
+    applyHeroBg(savedDataUrl);
+  } else if (savedUrl) {
+    applyHeroBg(savedUrl);
+  }
+
+  // Dodaj kontrolki pod nagłówkiem "Zuzanna Klimas"
+  if (overlay) {
+    const controls = document.createElement('div');
+    controls.className = 'hero-controls';
+    controls.style.cssText = 'margin-top:1rem; display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center;';
+
+    const urlBtn = document.createElement('button');
+    urlBtn.className = 'btn secondary';
+    urlBtn.type = 'button';
+    urlBtn.textContent = 'Wklej link tła';
+
+    const fileBtn = document.createElement('button');
+    fileBtn.className = 'btn secondary';
+    fileBtn.type = 'button';
+    fileBtn.textContent = 'Wgraj obraz';
+
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'btn secondary';
+    resetBtn.type = 'button';
+    resetBtn.textContent = 'Reset tła';
+
+    controls.append(urlBtn, fileBtn, resetBtn);
+    overlay.appendChild(controls);
+
+    // Ustawienie tła z linku URL
+    urlBtn.addEventListener('click', () => {
+      const url = prompt('Wklej pełny adres URL do obrazu (np. https://.../tlo.jpg):');
+      if (url && /^https?:\/\/.+/.test(url)) {
+        applyHeroBg(url);
+        localStorage.removeItem('heroBgDataUrl');
+        localStorage.setItem('heroBgUrl', url);
+      }
+    });
+
+    // Ustawienie tła z pliku
+    fileBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataUrl = reader.result;
+          applyHeroBg(dataUrl);
+          try {
+            // Zapis do localStorage (utrwalenie po odświeżeniu)
+            localStorage.setItem('heroBgDataUrl', dataUrl);
+            localStorage.removeItem('heroBgUrl');
+          } catch (err) {
+            // Plik zbyt duży – użyjemy tymczasowego URL (nie przetrwa odświeżenia)
+            const objUrl = URL.createObjectURL(file);
+            applyHeroBg(objUrl);
+            localStorage.removeItem('heroBgDataUrl');
+            localStorage.removeItem('heroBgUrl');
+            alert('Obraz jest zbyt duży, tło nie będzie zapamiętane po odświeżeniu.');
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+      input.click();
+    });
+
+    // Reset tła do domyślnego
+    resetBtn.addEventListener('click', () => {
+      hero.style.backgroundImage = 'url("hero-bg.jpg")';
+      localStorage.removeItem('heroBgDataUrl');
+      localStorage.removeItem('heroBgUrl');
+    });
+  }
+
+  // 2) Dodatkowy link w sekcji FENIX (Canva)
+  const canvaHref = 'https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c';
+  const fenixSection = document.getElementById('fenix');
+  if (fenixSection) {
+    let wrap = fenixSection.querySelector('.btn-wrap');
+    if (!wrap) {
+      wrap = document.createElement('div');
       wrap.className = 'btn-wrap';
-      wrap.appendChild(newBtn);
-      target.appendChild(wrap);
+      fenixSection.appendChild(wrap);
+    }
+    // Nie duplikuj linku przy kolejnych odświeżeniach
+    if (!wrap.querySelector('a[data-extra="canva"]')) {
+      const extra = document.createElement('a');
+      extra.className = 'btn secondary';
+      extra.href = canvaHref;
+      extra.target = '_blank';
+      extra.rel = 'noopener noreferrer';
+      extra.dataset.extra = 'canva';
+      extra.textContent = 'Dodatkowy link';
+      wrap.appendChild(extra);
     }
   }
 });
