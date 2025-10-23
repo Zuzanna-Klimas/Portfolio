@@ -82,13 +82,6 @@
       font-weight: 500;
       opacity: 0.95;
     }
-    .hero-actions{
-      display: inline-flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
 
     /* Main content wrapper */
     .content{
@@ -233,13 +226,6 @@
     <div class="overlay">
       <h1>Zuzanna Klimas</h1>
       <h2>Game Designer &amp; World Builder</h2>
-
-      <!-- Akcje dla tła hero -->
-      <div class="hero-actions" aria-label="Ustawienia tła">
-        <input type="file" id="bgInput" accept="image/*" hidden aria-hidden="true" />
-        <button class="btn small" id="bgChangeBtn" type="button" aria-label="Zmień tło sekcji powitalnej">Zmień tło</button>
-        <button class="btn small secondary" id="bgResetBtn" type="button" aria-label="Przywróć domyślne tło sekcji powitalnej">Resetuj tło</button>
-      </div>
     </div>
   </header>
 
@@ -362,54 +348,6 @@ Ukryta podstrona(dodatek): K3Y4P</pre>
   <script>
     // Aktualny rok w stopce
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Personalizacja tła sekcji HERO
-    (function(){
-      const hero = document.querySelector('.hero');
-      const input = document.getElementById('bgInput');
-      const changeBtn = document.getElementById('bgChangeBtn');
-      const resetBtn = document.getElementById('bgResetBtn');
-      const STORAGE_KEY = 'customHeroBg';
-
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          hero.style.backgroundImage = `url('${saved}')`;
-          resetBtn.disabled = false;
-        } else {
-          resetBtn.disabled = true;
-        }
-      } catch (e) {
-        resetBtn.disabled = true;
-      }
-
-      changeBtn.addEventListener('click', () => input.click());
-      input.addEventListener('change', () => {
-        const file = input.files && input.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const dataUrl = ev.target.result;
-          hero.style.backgroundImage = `url('${dataUrl}')`;
-
-          try {
-            localStorage.setItem(STORAGE_KEY, dataUrl);
-            resetBtn.disabled = false;
-          } catch (e) {
-            console.warn('Nie udało się zapisać tła w pamięci przeglądarki (zbyt duży plik?).', e);
-            resetBtn.disabled = true;
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-
-      resetBtn.addEventListener('click', () => {
-        hero.style.backgroundImage = '';
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        resetBtn.disabled = true;
-      });
-    })();
 
     // Rozwijany panel "Odpowiedzi do strony"
     (function(){
