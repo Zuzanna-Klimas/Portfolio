@@ -164,14 +164,17 @@
       text-decoration: none;
       filter: brightness(1.02);
     }
+
     .btn-wrap{
-      position: relative; /* bazowy kontekst dla dymka */
+      position: relative;
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       margin-top: 1rem;
       align-items: center;
     }
+    /* dociśnięcie ostatniego przycisku maksymalnie w prawo */
+    .btn.push-right{ margin-left: auto; }
 
     /* Popover (dymek) na details/summary */
     details.hint{
@@ -217,7 +220,7 @@
       border: 0 solid transparent;
       border-left-width: 10px;
       border-right-width: 10px;
-      border-bottom: 10px solid rgba(255,255,255,0.12); /* obrys */
+      border-bottom: 10px solid rgba(255,255,255,0.12);
       filter: blur(0.2px);
     }
     .hint .pop::after{
@@ -228,7 +231,7 @@
       border: 0 solid transparent;
       border-left-width: 9px;
       border-right-width: 9px;
-      border-bottom: 9px solid var(--popover-bg); /* wypełnienie */
+      border-bottom: 9px solid var(--popover-bg);
     }
     .hint .pop h4{
       margin: 0 0 .35rem 0;
@@ -274,6 +277,8 @@
       .btn-wrap{
         justify-content: center;
       }
+      .btn.push-right{ margin-left: 0; } /* na telefonach nie dopychamy do prawej */
+
       /* Dymek pod przyciskiem jako blok */
       .hint .pop{
         position: static;
@@ -341,12 +346,13 @@
       <img src="mutacje.png" alt="Grafika koncepcyjna mutacji w uniwersum F.E.N.I.X." />
 
       <div class="btn-wrap">
+        <!-- 1) Interaktywny prototyp -->
         <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
-        <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
-        <!-- Podpowiedź do strony (ten sam styl jak inne przyciski) -->
-        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony (Canva) w nowej karcie">Podpowiedź do strony</a>
 
-        <!-- Dymek z odpowiedziami (rozwijany) -->
+        <!-- 2) Podpowiedzi do strony (Canva) -->
+        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedzi do strony (Canva) w nowej karcie">Podpowiedzi do strony</a>
+
+        <!-- 3) Odpowiedzi do strony (dymek) -->
         <details class="hint">
           <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
           <div class="pop" role="note" aria-live="polite">
@@ -357,6 +363,9 @@
             <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
           </div>
         </details>
+
+        <!-- 4) Krótka Historyjka (dociśnięta maks w prawo) -->
+        <a class="btn push-right" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
       </div>
     </section>
 
