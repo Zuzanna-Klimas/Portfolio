@@ -17,6 +17,7 @@
       --accent: #FFD700;
       --panel: #4c4f69;
       --panel-contrast: rgba(0,0,0,0.25);
+      --popover-bg: rgba(10,10,10,0.9);
     }
 
     *{ box-sizing: border-box; }
@@ -70,7 +71,7 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.45);
       text-align: center;
       backdrop-filter: saturate(120%) blur(2px);
-      overflow: hidden;
+      overflow: hidden; /* dla pseudo-elementu tła */
     }
     /* Opcjonalne zdjęcie w tle panelu z imieniem/nazwiskiem
        Aby włączyć, dodaj do .overlay atrybut style z:
@@ -91,7 +92,6 @@
       position: relative;
       z-index: 1;
     }
-
     .hero h1{
       font-size: clamp(2rem, 6vw, 4rem);
       letter-spacing: 0.5px;
@@ -155,6 +155,8 @@
       transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
       text-align: center;
       white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
     }
     .btn:hover{
       transform: translateY(-2px);
@@ -162,21 +164,90 @@
       text-decoration: none;
       filter: brightness(1.02);
     }
-    .btn.secondary{
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-    }
     .btn-wrap{
+      position: relative; /* bazowy kontekst dla dymka */
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       margin-top: 1rem;
+      align-items: center;
     }
-    .btn-center{
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
+
+    /* Popover (dymek) na details/summary */
+    details.hint{
+      position: relative;
+      display: inline-block;
+      z-index: 5;
+    }
+    details.hint summary{
+      list-style: none;
+      outline: none;
+    }
+    details.hint summary::-webkit-details-marker{ display: none; }
+    details.hint[open] summary.btn{
+      filter: brightness(0.98);
+    }
+    .hint .pop{
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      width: min(560px, 92vw);
+      background: var(--popover-bg);
+      color: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+      padding: 1rem 1.1rem;
+      transform: translateY(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    details.hint[open] .pop{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    /* Strzałka dymka */
+    .hint .pop::before{
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 18px;
+      border: 0 solid transparent;
+      border-left-width: 10px;
+      border-right-width: 10px;
+      border-bottom: 10px solid rgba(255,255,255,0.12); /* obrys */
+      filter: blur(0.2px);
+    }
+    .hint .pop::after{
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 19px;
+      border: 0 solid transparent;
+      border-left-width: 9px;
+      border-right-width: 9px;
+      border-bottom: 9px solid var(--popover-bg); /* wypełnienie */
+    }
+    .hint .pop h4{
+      margin: 0 0 .35rem 0;
+      font-family: 'Roboto Mono', monospace;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .hint .kv{
+      margin: 0.25rem 0;
+      font-family: 'Roboto Mono', monospace;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.2);
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+    }
+    .hint .kv b{
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: .35rem;
     }
 
     /* Footer */
@@ -202,6 +273,19 @@
       }
       .btn-wrap{
         justify-content: center;
+      }
+      /* Dymek pod przyciskiem jako blok */
+      .hint .pop{
+        position: static;
+        width: 100%;
+        margin-top: .65rem;
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      .hint .pop::before,
+      .hint .pop::after{
+        display: none;
       }
     }
     @media (max-width: 600px){
@@ -259,7 +343,20 @@
       <div class="btn-wrap">
         <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
         <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
-        <a class="btn secondary" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony (Canva) w nowej karcie">Podpowiedź do strony</a>
+        <!-- Podpowiedź do strony (ten sam styl jak inne przyciski) -->
+        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz podpowiedź do strony (Canva) w nowej karcie">Podpowiedź do strony</a>
+
+        <!-- Dymek z odpowiedziami (rozwijany) -->
+        <details class="hint">
+          <summary class="btn" aria-label="Pokaż odpowiedzi do strony">Odpowiedzi do strony</summary>
+          <div class="pop" role="note" aria-live="polite">
+            <h4>Dane dostępowe i wskazówki</h4>
+            <div class="kv"><b>Login:</b> Victor_Noctar</div>
+            <div class="kv"><b>Hasło:</b> W4terzwijn</div>
+            <div class="kv"><b>Przykładowy ukryty raport:</b> 5483</div>
+            <div class="kv"><b>Ukryta podstrona (dodatek):</b> K3Y4P</div>
+          </div>
+        </details>
       </div>
     </section>
 
