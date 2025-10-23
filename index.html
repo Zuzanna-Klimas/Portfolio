@@ -257,7 +257,7 @@
       <div class="btn-wrap">
         <a class="btn" href="https://interaktywna-strona-7una.bolt.host/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz interaktywny prototyp w nowej karcie">Interaktywny Prototyp</a>
         <a class="btn" href="https://mufibka.github.io/Demo-portfolio-ZK/" target="_blank" rel="noopener noreferrer" aria-label="Otwórz krótką historyjkę w nowej karcie">Krótka Historyjka</a>
-        <a class="btn secondary" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz prezentację Canva w nowej karcie">Prezentacja (Canva)</a>
+        <a class="btn" href="https://www.canva.com/design/DAGwQ6t4jmU/7YAdFK_1rEQBdxNqw81rKA/view?utm_content=DAGwQ6t4jmU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h41cbecc46c" target="_blank" rel="noopener noreferrer" aria-label="Otwórz Poppowiedź do strony w nowej karcie">Poppowiedź do strony</a>
       </div>
     </section>
 
@@ -366,7 +366,6 @@
           resetBtn.disabled = true;
         }
       } catch (e) {
-        // Brak wsparcia lub błąd localStorage – po prostu nic nie rób
         resetBtn.disabled = true;
       }
 
@@ -376,13 +375,11 @@
         const file = input.files && input.files[0];
         if (!file) return;
 
-        // Wczytaj jako DataURL i ustaw jako tło
         const reader = new FileReader();
         reader.onload = (ev) => {
           const dataUrl = ev.target.result;
           hero.style.backgroundImage = `url('${dataUrl}')`;
 
-          // Spróbuj zapisać w localStorage (może się nie udać dla dużych plików)
           try {
             localStorage.setItem(STORAGE_KEY, dataUrl);
             resetBtn.disabled = false;
@@ -397,9 +394,7 @@
       // Reset tła
       resetBtn.addEventListener('click', () => {
         hero.style.backgroundImage = '';
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (e) {}
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
         resetBtn.disabled = true;
       });
     })();
